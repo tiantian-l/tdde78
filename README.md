@@ -1,93 +1,192 @@
-# TDDE78Lab
+# TDDE78: Deep Reinforcement Learning
+
+## Linköping University — Spring 2026
 
 
 
-## Getting started
+## Course Overview
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+This course provides a foundational introduction to **deep reinforcement learning** from a computer science perspective. The focus is exclusively on **deep learning-based methods** — no tabular or dynamic programming approaches are used. Students implement state-of-the-art algorithms in PyTorch and systematically evaluate them on standard benchmark environments using Gymnasium and Atari.
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+### Prerequisites
 
-## Add your files
+- Practical programming skills in Python
+- Working knowledge of deep learning, especially deep neural networks (e.g., from TDDC17 Artificial Intelligence)
+- Understanding of common concepts in computer science and optimization
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/topics/git/add_files/#add-files-to-a-git-repository) or push an existing Git repository with the following command:
+---
+
+## Learning Outcomes
+
+After completing all labs, students will be able to:
+
+1. **Identify** basic concepts, terminology, theories, models, and methods in deep reinforcement learning
+2. **Implement** core deep RL algorithms — including value-based, policy gradient, actor-critic, model-based, and multi-agent methods
+3. **Design and execute** systematic experiments to evaluate and compare RL algorithms
+4. **Analyze** the effect of architectural choices, hyperparameters, and algorithmic variants through ablation studies
+5. **Interpret and document** experimental results with proper statistical methodology (multiple seeds, learning curves, performance metrics)
+6. **Read and understand** current research literature in the field of deep reinforcement learning
+
+---
+
+## Lab Structure
+
+The course consists of **5 labs**, each covering a major deep RL paradigm. Every lab is divided into two parts:
+
+- **Part A — Implementation:** Build the algorithm(s) from scratch in PyTorch. Focus on understanding the core mechanics, loss functions, and training loops.
+- **Part B — Experiments:** Run systematic experiments including ablation studies, hyperparameter sensitivity analysis, and cross-method comparisons. Produce a written report with visualizations and analysis.
+
+### Lab Overview
+
+| Lab | Topic | Core Methods | Environments |
+|-----|-------|-------------|--------------|
+| **Lab 1** | Value-Based Deep RL | DQN, Double DQN, Dueling DQN | CartPole-v1, LunarLander-v3, Atari (Pong) |
+| **Lab 2** | Policy Gradient | REINFORCE (with baseline), PPO | CartPole-v1, Pendulum-v1, Atari |
+| **Lab 3** | Actor-Critic | A2C (with GAE), SAC | LunarLander-v3, BipedalWalker-v3 |
+| **Lab 4** | Model-Based Deep RL | Learned dynamics model, Dyna-style planning | CartPole-v1, Pendulum-v1 |
+| **Lab 5** | Multi-Agent Deep RL | MADDPG / MAPPO | PettingZoo (simple_spread, simple_adversary) |
+
+### Lab Details
+
+#### Lab 1 — Value-Based Deep RL
+> Learn to approximate Q-values with neural networks
+
+- **Part A:** Implement vanilla DQN with experience replay and target networks. Extend to Double DQN (reducing overestimation bias) and Dueling DQN (separate value and advantage streams).
+- **Part B:** Ablation studies on replay buffer size, target network update frequency, epsilon-decay schedules, and network architecture. Compare DQN variants on CartPole and LunarLander. Scale to an Atari game (e.g., Pong).
+
+#### Lab 2 — Policy Gradient
+> Learn policies directly through gradient ascent on expected return
+
+- **Part A:** Implement REINFORCE with a learned baseline for variance reduction. Implement Proximal Policy Optimization (PPO) with clipped surrogate objective.
+- **Part B:** Analyze REINFORCE vs PPO in terms of convergence speed and stability. Study the effect of the baseline, entropy bonus, GAE lambda, and clipping ratio. Test on both discrete and continuous action spaces.
+
+#### Lab 3 — Actor-Critic
+> Combine value estimation and policy optimization
+
+- **Part A:** Implement Advantage Actor-Critic (A2C) with Generalized Advantage Estimation (GAE). Implement Soft Actor-Critic (SAC) for continuous control with entropy regularization and twin Q-networks.
+- **Part B:** Compare A2C vs SAC on continuous control tasks. Study entropy temperature tuning in SAC. Analyze sample efficiency and final performance across environments.
+
+#### Lab 4 — Model-Based Deep RL
+> Learn a model of the environment and use it for planning
+
+- **Part A:** Train a neural network to predict next-state and reward given current state and action. Integrate the learned model with a model-free method (Dyna-style: augment real experience with model-generated rollouts).
+- **Part B:** Compare model-based vs model-free sample efficiency. Analyze how model prediction accuracy evolves during training. Study the effect of planning horizon (number of model rollouts). Identify when model-based approaches help vs hurt.
+
+#### Lab 5 — Multi-Agent Deep RL
+> Extend deep RL to settings with multiple interacting agents
+
+- **Part A:** Implement Multi-Agent DDPG (MADDPG) or Multi-Agent PPO (MAPPO) with centralized training and decentralized execution (CTDE).
+- **Part B:** Evaluate on cooperative (simple_spread) and competitive (simple_adversary) scenarios. Study how the number of agents affects learning. Analyze emergent communication and coordination strategies.
+
+---
+
+## Examination
+
+All assessment is through a single examination component:
+
+| Code | Component | Credits | Grading |
+|------|-----------|---------|---------|
+| LAB1 | Laboratory Work | 6 | U, 3, 4, 5 |
+
+Each lab submission includes:
+- Complete, runnable implementation code (Part A)
+- Experiment results with plots, tables, and statistical analysis over multiple seeds (Part B)
+- Written report documenting methodology, results, and discussion
+
+---
+
+## Tech Stack
+
+| Component | Tool |
+|-----------|------|
+| Language | Python 3.10+ |
+| Deep Learning | PyTorch |
+| RL Environments | Gymnasium (single-agent), Atari (via `gymnasium[atari]`) |
+| Multi-Agent | PettingZoo |
+| Logging | TensorBoard / Weights & Biases |
+| Package Manager | uv |
+
+---
+
+## Setup
+
+All dependencies are installed in an isolated virtual environment using `uv` — **no sudo required**.
+
+```bash
+# One-time setup
+bash setup.sh
+
+# Activate environment (every session)
+source .venv/bin/activate
+
+# Verify installation
+python -c "import gymnasium; import torch; print('Ready!')"
+```
+
+See `setup.sh` for full details.
+
+---
+
+## Directory Structure
 
 ```
-cd existing_repo
-git remote add origin https://gitlab.liu.se/amaso88/tdde78lab.git
-git branch -M main
-git push -uf origin main
+tdde78labsolution/
+├── README.md                          # This file
+├── setup.sh                           # Environment setup script
+├── requirements.txt                   # Python dependencies
+│
+├── labs/
+│   ├── lab1_value_based/              # Lab 1: DQN and variants
+│   │   ├── starter_code/
+│   │   ├── solution/
+│   │   └── experiments/
+│   │
+│   ├── lab2_policy_gradient/          # Lab 2: REINFORCE, PPO
+│   │   ├── starter_code/
+│   │   ├── solution/
+│   │   └── experiments/
+│   │
+│   ├── lab3_actor_critic/             # Lab 3: A2C, SAC
+│   │   ├── starter_code/
+│   │   ├── solution/
+│   │   └── experiments/
+│   │
+│   ├── lab4_model_based/              # Lab 4: Learned dynamics, Dyna
+│   │   ├── starter_code/
+│   │   ├── solution/
+│   │   └── experiments/
+│   │
+│   └── lab5_multi_agent/              # Lab 5: MADDPG, MAPPO
+│       ├── starter_code/
+│       ├── solution/
+│       └── experiments/
+│
+├── utils/                             # Shared utilities
+│   ├── replay_buffer.py
+│   ├── networks.py
+│   ├── plotting.py
+│   └── metrics.py
+│
+└── results/                           # Experiment outputs
+    ├── logs/
+    ├── checkpoints/
+    └── figures/
 ```
 
-## Integrate with your tools
+---
 
-- [ ] [Set up project integrations](https://gitlab.liu.se/amaso88/tdde78lab/-/settings/integrations)
+## Resources
 
-## Collaborate with your team
+- **Course Syllabus:** [studieinfo.liu.se/en/kurs/TDDE78](https://studieinfo.liu.se/en/kurs/TDDE78)
+- **Gymnasium:** [gymnasium.farama.org](https://gymnasium.farama.org/)
+- **PettingZoo:** [pettingzoo.farama.org](https://pettingzoo.farama.org/)
+- **Textbook (open access):** [arxiv.org/abs/2201.02135](https://arxiv.org/abs/2201.02135)
+- **PyTorch:** [pytorch.org](https://pytorch.org/)
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/user/project/merge_requests/auto_merge/)
+---
 
-## Test and Deploy
+*Department of Computer Science (IDA), Linköping University — Spring 2026*
 
-Use the built-in continuous integration in GitLab.
+---
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
-
-***
-
-# Editing this README
-
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
-
-## Suggestions for a good README
-
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-Choose a self-explaining name for your project.
-
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
-
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
-
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
-
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
-
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+**Lab designed by Amath Sow:** [amath.sow@liu.se](mailto:amath.sow@liu.se)
