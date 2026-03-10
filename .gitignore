@@ -1,0 +1,17 @@
+# Experiment outputs
+labs/*/experiments/plots/
+labs/*/experiments/videos/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Results
+results/logs/
+results/checkpoints/
+results/figures/
