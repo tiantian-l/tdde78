@@ -1,5 +1,5 @@
 """
-Utility functions and data structures for Policy Gradient methods.
+Utility functions and data structures for Policy Gradient methods — SOLUTION.
 
 TDDE78 — Lab 2: Policy Gradient
 Linköping University, Spring 2026
@@ -22,17 +22,12 @@ def compute_returns(rewards, gamma):
     Returns:
         np.ndarray: Discounted returns of shape (T,), dtype float32
     """
-    # =========================================================================
-    # TODO: Compute discounted returns by iterating backwards through rewards.
-    #
-    # Steps:
-    # 1. Initialize G = 0.0 and an empty list 'returns'
-    # 2. For each reward r in reversed(rewards):
-    #      G = r + gamma * G
-    #      returns.insert(0, G)   # prepend so index 0 = G_0
-    # 3. Return np.array(returns, dtype=np.float32)
-    # =========================================================================
-    raise NotImplementedError("Implement compute_returns()")
+    returns = []
+    G = 0.0
+    for r in reversed(rewards):
+        G = r + gamma * G
+        returns.insert(0, G)
+    return np.array(returns, dtype=np.float32)
 
 
 def compute_gae(rewards, values, dones, last_value, gamma, gae_lambda):
@@ -59,26 +54,20 @@ def compute_gae(rewards, values, dones, last_value, gamma, gae_lambda):
         advantages (np.ndarray): Shape (T,), dtype float32
         returns    (np.ndarray): advantages + values, used as value targets, shape (T,)
     """
-    # =========================================================================
-    # TODO: Implement GAE by iterating backwards through the rollout.
-    #
-    # Steps:
-    # 1. T = len(rewards)
-    # 2. advantages = np.zeros(T, dtype=np.float32)
-    # 3. gae = 0.0
-    # 4. For t in reversed(range(T)):
-    #      next_non_terminal = 1.0 - float(dones[t])
-    #      next_value = last_value if t == T-1 else values[t+1]
-    #      delta = rewards[t] + gamma * next_value * next_non_terminal - values[t]
-    #      gae = delta + gamma * gae_lambda * next_non_terminal * gae
-    #      advantages[t] = gae
-    # 5. returns = advantages + np.array(values, dtype=np.float32)
-    # 6. Return advantages, returns
-    #
-    # Key insight: next_non_terminal = 0 when done=True, which stops the
-    # advantage from bootstrapping across episode boundaries.
-    # =========================================================================
-    raise NotImplementedError("Implement compute_gae()")
+    T = len(rewards)
+    advantages = np.zeros(T, dtype=np.float32)
+    gae = 0.0
+
+    for t in reversed(range(T)):
+        next_non_terminal = 1.0 - float(dones[t])
+        next_value = last_value if t == T - 1 else values[t + 1]
+
+        delta = rewards[t] + gamma * next_value * next_non_terminal - values[t]
+        gae = delta + gamma * gae_lambda * next_non_terminal * gae
+        advantages[t] = gae
+
+    returns = advantages + np.array(values, dtype=np.float32)
+    return advantages, returns
 
 
 class RolloutBuffer:
@@ -127,42 +116,30 @@ class RolloutBuffer:
             log_prob: float — log π_θ(a | s) at collection time
             value:    float — V(s) estimate at collection time
         """
-        # =====================================================================
-        # TODO: Append each argument to its respective list.
-        #
-        # Be careful about types:
-        #   - state:    np.array(state, dtype=np.float32)
-        #   - action:   np.array(action, dtype=np.float32).reshape(-1)  if is_continuous
-        #               int(action)                                       if discrete
-        #   - reward:   float(reward)
-        #   - done:     bool(done)
-        #   - log_prob: float(log_prob)
-        #   - value:    float(value)
-        # =====================================================================
-        raise NotImplementedError("Implement RolloutBuffer.store()")
+        self.states.append(np.array(state, dtype=np.float32))
+        if self.is_continuous:
+            self.actions.append(np.array(action, dtype=np.float32).reshape(-1))
+        else:
+            self.actions.append(int(action))
+        self.rewards.append(float(reward))
+        self.dones.append(bool(done))
+        self.log_probs.append(float(log_prob))
+        self.values.append(float(value))
 
     def compute_returns_and_advantages(self, last_value, gamma, gae_lambda):
         """
         Compute GAE advantages and value-function targets.
 
-        Must be called after collecting a full rollout and before get_batches().
+        Must be called after collect_rollout() and before get_batches().
 
         Args:
             last_value (float): Bootstrapped V(s_{T+1}) after the last collected step.
             gamma      (float): Discount factor.
             gae_lambda (float): GAE lambda.
         """
-        # =====================================================================
-        # TODO: Call compute_gae() to fill self.advantages and self.returns.
-        #
-        #   self.advantages, self.returns = compute_gae(
-        #       self.rewards, self.values, self.dones, last_value, gamma, gae_lambda
-        #   )
-        #
-        # Note: advantage normalization is done per mini-batch inside PPOAgent.update(),
-        # NOT here — so just store the raw GAE advantages.
-        # =====================================================================
-        raise NotImplementedError("Implement RolloutBuffer.compute_returns_and_advantages()")
+        self.advantages, self.returns = compute_gae(
+            self.rewards, self.values, self.dones, last_value, gamma, gae_lambda
+        )
 
     def get_batches(self, batch_size):
         """
@@ -182,27 +159,29 @@ class RolloutBuffer:
                 returns:       FloatTensor (batch_size,)
                 old_values:    FloatTensor (batch_size,)  — V(s) at collection time, for value clipping
         """
-        # =====================================================================
-        # TODO: Implement mini-batch sampling.
-        #
-        # Steps:
-        # 1. n = len(self)
-        # 2. indices = np.random.permutation(n)
-        # 3. Convert lists to tensors:
-        #      states_t     = torch.FloatTensor(np.array(self.states))
-        #      actions_t    = torch.FloatTensor(np.array(self.actions, dtype=np.float32))
-        #                     or torch.LongTensor(np.array(self.actions, dtype=np.int64))
-        #                     depending on self.is_continuous
-        #      log_probs_t  = torch.FloatTensor(np.array(self.log_probs, dtype=np.float32))
-        #      advantages_t = torch.FloatTensor(self.advantages)
-        #      returns_t    = torch.FloatTensor(self.returns)
-        #      old_values_t = torch.FloatTensor(np.array(self.values, dtype=np.float32))
-        # 4. For start in range(0, n, batch_size):
-        #      idx = indices[start : start + batch_size]
-        #      yield (states_t[idx], actions_t[idx], log_probs_t[idx],
-        #             advantages_t[idx], returns_t[idx], old_values_t[idx])
-        # =====================================================================
-        raise NotImplementedError("Implement RolloutBuffer.get_batches()")
+        n = len(self)
+        indices = np.random.permutation(n)
+
+        states_t = torch.FloatTensor(np.array(self.states))
+        if self.is_continuous:
+            actions_t = torch.FloatTensor(np.array(self.actions, dtype=np.float32))
+        else:
+            actions_t = torch.LongTensor(np.array(self.actions, dtype=np.int64))
+        log_probs_t = torch.FloatTensor(np.array(self.log_probs, dtype=np.float32))
+        advantages_t = torch.FloatTensor(self.advantages)
+        returns_t = torch.FloatTensor(self.returns)
+        old_values_t = torch.FloatTensor(np.array(self.values, dtype=np.float32))
+
+        for start in range(0, n, batch_size):
+            idx = indices[start: start + batch_size]
+            yield (
+                states_t[idx],
+                actions_t[idx],
+                log_probs_t[idx],
+                advantages_t[idx],
+                returns_t[idx],
+                old_values_t[idx],
+            )
 
     def __len__(self):
         return len(self.states)
