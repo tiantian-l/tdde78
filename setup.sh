@@ -117,15 +117,8 @@ info "Creating project directory structure..."
 # Lab directories
 for lab in lab1_value_based lab2_policy_gradient lab3_actor_critic lab4_model_based lab5_multi_agent; do
     mkdir -p "labs/${lab}/starter_code"
-    mkdir -p "labs/${lab}/solution"
     mkdir -p "labs/${lab}/experiments"
 done
-
-# Shared utilities
-mkdir -p utils
-
-# Results directories
-mkdir -p results/{logs,checkpoints,figures}
 
 ok "Directory structure created"
 echo ""

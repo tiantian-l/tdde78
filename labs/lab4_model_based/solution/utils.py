@@ -144,7 +144,7 @@ def plot_dyna_results(results, title="Dyna Training", window=20, experiments_dir
 
 
 def plot_comparison(all_results, title="Comparison", window=20,
-                    x_key='episode_timesteps', experiments_dir=None):
+                    x_key='episode_timesteps', ylim=None, experiments_dir=None):
     """
     Plot mean ± std reward across multiple methods / seeds on the same axes.
 
@@ -153,6 +153,7 @@ def plot_comparison(all_results, title="Comparison", window=20,
         title       (str):  Plot title and saved filename.
         window      (int):  Moving-average window.
         x_key       (str):  Key for x-axis values ('episode_timesteps').
+        ylim        (tuple): Optional (ymin, ymax) to fix the y-axis range.
     """
     fig, ax = plt.subplots(figsize=(12, 5))
     colors  = plt.rcParams['axes.prop_cycle'].by_key()['color']
@@ -175,6 +176,8 @@ def plot_comparison(all_results, title="Comparison", window=20,
     ax.set_xlabel('Environment Steps')
     ax.set_ylabel('Episode Reward')
     ax.set_title(title)
+    if ylim is not None:
+        ax.set_ylim(ylim)
     ax.legend(); ax.grid(True, alpha=0.3)
     plt.tight_layout()
     _save_plot(fig, title, experiments_dir)

@@ -6,7 +6,7 @@
 
 ## Course Overview
 
-This course provides a foundational introduction to **deep reinforcement learning** from a computer science perspective. The focus is exclusively on **deep learning-based methods** — no tabular or dynamic programming approaches are used. Students implement state-of-the-art algorithms in PyTorch and systematically evaluate them on standard benchmark environments using Gymnasium and Atari.
+This course provides a foundational introduction to **deep reinforcement learning** from a computer science perspective. All methods use neural networks as function approximators — policies, value functions, and environment models are learned end-to-end in PyTorch. Students implement state-of-the-art algorithms and systematically evaluate them on standard benchmark environments using Gymnasium and PettingZoo.
 
 ### Prerequisites
 
@@ -40,11 +40,11 @@ The course consists of **5 labs**, each covering a major deep RL paradigm. Every
 
 | Lab | Topic | Core Methods | Environments |
 |-----|-------|-------------|--------------|
-| **Lab 1** | Value-Based Deep RL | DQN, Double DQN, Dueling DQN | CartPole-v1, LunarLander-v3, Atari (Pong) |
-| **Lab 2** | Policy Gradient | REINFORCE (with baseline), PPO | CartPole-v1, Pendulum-v1, Atari |
-| **Lab 3** | Actor-Critic | A2C (with GAE), SAC | LunarLander-v3, BipedalWalker-v3 |
-| **Lab 4** | Model-Based Deep RL | Learned dynamics model, Dyna-style planning | CartPole-v1, Pendulum-v1 |
-| **Lab 5** | Multi-Agent Deep RL | MADDPG / MAPPO | PettingZoo (simple_spread, simple_adversary) |
+| **Lab 1** | Value-Based Deep RL | DQN, Double DQN, Dueling DQN | CartPole-v1, LunarLander-v3 |
+| **Lab 2** | Policy Gradient | REINFORCE (with/without baseline), PPO | CartPole-v1 |
+| **Lab 3** | Actor-Critic | A2C (with GAE), SAC | LunarLanderContinuous-v3 |
+| **Lab 4** | Model-Based Deep RL | Dyna-Q (neural WorldModel), MCTS | CliffWalking-v1 |
+| **Lab 5** | Multi-Agent Deep RL | MAPPO, MADDPG | simple_spread_v3 (PettingZoo) |
 
 ### Lab Details
 
@@ -52,46 +52,31 @@ The course consists of **5 labs**, each covering a major deep RL paradigm. Every
 > Learn to approximate Q-values with neural networks
 
 - **Part A:** Implement vanilla DQN with experience replay and target networks. Extend to Double DQN (reducing overestimation bias) and Dueling DQN (separate value and advantage streams).
-- **Part B:** Ablation studies on replay buffer size, target network update frequency, epsilon-decay schedules, and network architecture. Compare DQN variants on CartPole and LunarLander. Scale to an Atari game (e.g., Pong).
+- **Part B:** Ablation studies on replay buffer size, target network update frequency, and DQN variant comparison on CartPole-v1. Scale to LunarLander-v3 to measure performance on a harder continuous-observation task.
 
 #### Lab 2 — Policy Gradient
 > Learn policies directly through gradient ascent on expected return
 
-- **Part A:** Implement REINFORCE with a learned baseline for variance reduction. Implement Proximal Policy Optimization (PPO) with clipped surrogate objective.
-- **Part B:** Analyze REINFORCE vs PPO in terms of convergence speed and stability. Study the effect of the baseline, entropy bonus, GAE lambda, and clipping ratio. Test on both discrete and continuous action spaces.
+- **Part A:** Implement REINFORCE with and without a learned value baseline for variance reduction. Implement Proximal Policy Optimization (PPO) with GAE and clipped surrogate objective.
+- **Part B:** Ablation studies on CartPole-v1 — compare REINFORCE with and without baseline, sweep GAE lambda (λ ∈ {0.0, 0.95, 1.0}), and analyze variance reduction in practice.
 
 #### Lab 3 — Actor-Critic
 > Combine value estimation and policy optimization
 
 - **Part A:** Implement Advantage Actor-Critic (A2C) with Generalized Advantage Estimation (GAE). Implement Soft Actor-Critic (SAC) for continuous control with entropy regularization and twin Q-networks.
-- **Part B:** Compare A2C vs SAC on continuous control tasks. Study entropy temperature tuning in SAC. Analyze sample efficiency and final performance across environments.
+- **Part B:** Compare A2C vs SAC on LunarLanderContinuous-v3. Study SAC entropy temperature (fixed α vs auto-tuned). Analyze GAE lambda sensitivity in A2C. Quantify the sample-efficiency gap between on-policy and off-policy methods.
 
 #### Lab 4 — Model-Based Deep RL
 > Learn a model of the environment and use it for planning
 
-- **Part A:** Train a neural network to predict next-state and reward given current state and action. Integrate the learned model with a model-free method (Dyna-style: augment real experience with model-generated rollouts).
-- **Part B:** Compare model-based vs model-free sample efficiency. Analyze how model prediction accuracy evolves during training. Study the effect of planning horizon (number of model rollouts). Identify when model-based approaches help vs hurt.
+- **Part A:** Train a neural dynamics model (WorldModel) to predict next-state and reward. Integrate it with DQN via Dyna-style planning (real + simulated experience). Implement MCTS that uses the environment as a simulator for lookahead planning.
+- **Part B:** Dyna planning steps ablation — measure how many simulated rollouts are needed to accelerate DQN on CliffWalking-v1. MCTS simulation count sweep — show the trade-off between planning depth and computational cost. Both evaluated on **CliffWalking-v1**.
 
 #### Lab 5 — Multi-Agent Deep RL
 > Extend deep RL to settings with multiple interacting agents
 
-- **Part A:** Implement Multi-Agent DDPG (MADDPG) or Multi-Agent PPO (MAPPO) with centralized training and decentralized execution (CTDE).
-- **Part B:** Evaluate on cooperative (simple_spread) and competitive (simple_adversary) scenarios. Study how the number of agents affects learning. Analyze emergent communication and coordination strategies.
-
----
-
-## Examination
-
-All assessment is through a single examination component:
-
-| Code | Component | Credits | Grading |
-|------|-----------|---------|---------|
-| LAB1 | Laboratory Work | 6 | U, 3, 4, 5 |
-
-Each lab submission includes:
-- Complete, runnable implementation code (Part A)
-- Experiment results with plots, tables, and statistical analysis over multiple seeds (Part B)
-- Written report documenting methodology, results, and discussion
+- **Part A:** Implement **MAPPO** (shared actor + centralized critic, on-policy PPO with parameter sharing) and **MADDPG** (per-agent independent actors + centralized Q-critics, off-policy with Gumbel-Softmax). Both follow the CTDE principle: centralized training, decentralized execution.
+- **Part B:** Compare MAPPO vs MADDPG over 3 seeds on the cooperative task simple_spread_v3. MAPPO entropy coefficient ablation (ent_coef ∈ {0.0, 0.001, 0.01, 0.05}) to study the exploration-exploitation trade-off in cooperative settings.
 
 ---
 
@@ -101,16 +86,15 @@ Each lab submission includes:
 |-----------|------|
 | Language | Python 3.10+ |
 | Deep Learning | PyTorch |
-| RL Environments | Gymnasium (single-agent), Atari (via `gymnasium[atari]`) |
-| Multi-Agent | PettingZoo |
-| Logging | TensorBoard / Weights & Biases |
+| RL Environments (single-agent) | Gymnasium |
+| RL Environments (multi-agent) | PettingZoo |
 | Package Manager | uv |
 
 ---
 
 ## Setup
 
-All dependencies are installed in an isolated virtual environment using `uv` — **no sudo required**.
+All dependencies are installed in an isolated virtual environment using `uv`.
 
 ```bash
 # One-time setup
@@ -130,48 +114,37 @@ See `setup.sh` for full details.
 ## Directory Structure
 
 ```
-tdde78labsolution/
+tdde78lab/
 ├── README.md                          # This file
 ├── setup.sh                           # Environment setup script
 ├── requirements.txt                   # Python dependencies
 │
-├── labs/
-│   ├── lab1_value_based/              # Lab 1: DQN and variants
-│   │   ├── starter_code/
-│   │   ├── solution/
-│   │   └── experiments/
-│   │
-│   ├── lab2_policy_gradient/          # Lab 2: REINFORCE, PPO
-│   │   ├── starter_code/
-│   │   ├── solution/
-│   │   └── experiments/
-│   │
-│   ├── lab3_actor_critic/             # Lab 3: A2C, SAC
-│   │   ├── starter_code/
-│   │   ├── solution/
-│   │   └── experiments/
-│   │
-│   ├── lab4_model_based/              # Lab 4: Learned dynamics, Dyna
-│   │   ├── starter_code/
-│   │   ├── solution/
-│   │   └── experiments/
-│   │
-│   └── lab5_multi_agent/              # Lab 5: MADDPG, MAPPO
-│       ├── starter_code/
-│       ├── solution/
-│       └── experiments/
-│
-├── utils/                             # Shared utilities
-│   ├── replay_buffer.py
-│   ├── networks.py
-│   ├── plotting.py
-│   └── metrics.py
-│
-└── results/                           # Experiment outputs
-    ├── logs/
-    ├── checkpoints/
-    └── figures/
+└── labs/
+    ├── lab1_value_based/              # Lab 1: DQN and variants
+    │   ├── starter_code/              # Notebook + networks.py, replay_buffer.py
+    │   └── experiments/               # Saved plots and results
+    │
+    ├── lab2_policy_gradient/          # Lab 2: REINFORCE, PPO
+    │   ├── starter_code/              # Notebook + networks.py, utils.py
+    │   └── experiments/
+    │
+    ├── lab3_actor_critic/             # Lab 3: A2C, SAC
+    │   ├── starter_code/              # Notebook + networks.py, utils.py
+    │   └── experiments/
+    │
+    ├── lab4_model_based/              # Lab 4: Dyna-Q, MCTS
+    │   ├── starter_code/              # Notebook + networks.py, utils.py
+    │   └── experiments/
+    │
+    └── lab5_multi_agent/              # Lab 5: MAPPO, MADDPG
+        ├── starter_code/              # Notebook + networks.py, utils.py
+        └── experiments/
 ```
+
+Each lab's `starter_code/` directory contains:
+- A Jupyter notebook (`.ipynb`) — main implementation and experiments
+- `networks.py` — neural network architectures
+- `utils.py` — training helpers, GAE, plotting, replay buffers
 
 ---
 
