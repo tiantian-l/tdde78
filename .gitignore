@@ -1,3 +1,8 @@
+# Course admin (not for students)
+labs/*/solution/
+LAB_INSTRUCTIONS.md
+exam_index.en.shtml
+
 # Experiment outputs
 labs/*/experiments/plots/
 labs/*/experiments/videos/
