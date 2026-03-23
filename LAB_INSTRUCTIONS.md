@@ -5,6 +5,19 @@
 
 ---
 
+## Examination Structure
+
+The examination consists of two components:
+
+| Module | ECTS | Description |
+|--------|------|-------------|
+| **LAB** | 4 hp | 5 lab assignments — group code submission |
+| **UPG** | 2 hp | Individual written report |
+
+Both components must be completed to pass the course.
+
+---
+
 ## General Rules
 
 - Labs may be completed **individually or in groups of 2–3**.
@@ -70,7 +83,7 @@ A lab is **passed** when:
 
 ---
 
-## Individual Written Report
+## UPG — Individual Written Report
 
 The report is **individual** — every student submits their own report regardless of lab group.
 
