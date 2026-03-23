@@ -19,9 +19,7 @@
   <li><strong>LAB grade</strong> = mean of the 5 individual lab grades (rounded to nearest integer)</li>
   <li><strong>Final grade</strong> = mean of LAB grade and UPG report grade (rounded to nearest integer)</li>
 </ol>
-<blockquote>
-  <p><strong>Important:</strong> A grade of <strong>U</strong> in any single lab or the report results in a <strong>U for the entire course</strong>. All components must receive at least a 3 to pass.</p>
-</blockquote>
+<p><strong>Important:</strong> A grade of <strong>U</strong> in any single lab or the report results in a <strong>U for the entire course</strong>. All components must receive at least a 3 to pass.</p>
 <hr />
 
 <h2>General Rules</h2>
@@ -63,7 +61,7 @@
 
 <h2>Code Submission</h2>
 <p>The code submission is <strong>per group</strong> — submit one <strong><code>.zip</code> archive</strong> named <code>labX_[liu-id1]_[liu-id2]_[liu-id3].zip</code> containing:</p>
-<pre><code>labX_[liu-ids]/
+<pre style="margin-left: 0;"><code>labX_[liu-ids]/
 ├── labX_[name].ipynb      # Completed notebook, all cells executed
 └── networks.py            # Your implementation</code></pre>
 <blockquote>
@@ -96,9 +94,9 @@
     <tr><th>Grade</th><th>Criteria</th></tr>
   </thead>
   <tbody>
-    <tr><td>3</td><td>Part A correctly implemented, Part B experiments complete and interpreted, reward threshold reached</td></tr>
-    <tr><td>4</td><td>Grade 3 criteria met + good experimental analysis and clear discussion of results</td></tr>
-    <tr><td>5</td><td>Grade 4 criteria met + thorough ablations, insightful analysis, and well-answered summary section</td></tr>
+    <tr><td>3</td><td>Part A (implementation) correctly completed</td></tr>
+    <tr><td>4</td><td>Part A and Part B (experiments) both completed</td></tr>
+    <tr><td>5</td><td>Part A and Part B completed + Summary section fully and insightfully answered</td></tr>
   </tbody>
 </table>
 <hr />

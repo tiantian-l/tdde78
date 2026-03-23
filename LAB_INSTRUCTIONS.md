@@ -85,9 +85,9 @@ Each lab is graded individually on a scale of **3 / 4 / 5**. The final LAB grade
 
 | Grade | Criteria |
 |-------|----------|
-| 3 | Part A correctly implemented, Part B experiments complete and interpreted, reward threshold reached |
-| 4 | Grade 3 criteria met + good experimental analysis and clear discussion of results |
-| 5 | Grade 4 criteria met + thorough ablations, insightful analysis, and well-answered summary section |
+| 3 | Part A (implementation) correctly completed |
+| 4 | Part A and Part B (experiments) both completed |
+| 5 | Part A and Part B completed + Summary section fully and insightfully answered |
 
 ---
 
