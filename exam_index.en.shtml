@@ -14,7 +14,14 @@
     <tr><td><strong>UPG</strong></td><td>2 hp</td><td>Individual written report (Uppgift)</td></tr>
   </tbody>
 </table>
-<p>Both components must be completed to pass the course.</p>
+<p>Both components are graded on a scale of <strong>U / 3 / 4 / 5</strong>. The final course grade is computed in two steps:</p>
+<ol>
+  <li><strong>LAB grade</strong> = mean of the 5 individual lab grades (rounded to nearest integer)</li>
+  <li><strong>Final grade</strong> = mean of LAB grade and UPG report grade (rounded to nearest integer)</li>
+</ol>
+<blockquote>
+  <p><strong>Important:</strong> A grade of <strong>U</strong> in any single lab or the report results in a <strong>U for the entire course</strong>. All components must receive at least a 3 to pass.</p>
+</blockquote>
 <hr />
 
 <h2>General Rules</h2>
@@ -32,7 +39,7 @@
   <li>Each lab's <code>starter_code/</code> directory contains:
     <ul>
       <li>A Jupyter notebook with TODO placeholders for the algorithm(s)</li>
-      <li><code>networks.py</code> — fully implemented neural network architectures</li>
+      <li><code>networks.py</code> — neural network architectures with TODO placeholders to implement</li>
       <li><code>utils.py</code> — fully implemented helpers, replay buffers, and plotting functions</li>
     </ul>
   </li>
@@ -59,34 +66,41 @@
 <pre><code>labX_[liu-ids]/
 ├── labX_[name].ipynb      # Completed notebook, all cells executed
 └── networks.py            # Your implementation</code></pre>
+<blockquote>
+  <p><strong>Important:</strong> Before submitting, make sure the <strong>Summary section</strong> at the end of the notebook is fully filled in. All experiment questions from Part B must be answered there.</p>
+</blockquote>
 <p>Submit via email to <a href="mailto:amath.sow@liu.se">amath.sow@liu.se</a>.</p>
 
 <h3>Deadlines</h3>
 <p>All labs are available from the start of the course (Wed 1 Apr).</p>
 <table border="1" cellpadding="6" cellspacing="0">
   <thead>
-    <tr><th>Lab</th><th>Submission Deadline</th><th>Late Deadline (−1 grade)</th></tr>
+    <tr><th>Lab</th><th>Submission Deadline</th></tr>
   </thead>
   <tbody>
-    <tr><td>Lab 1</td><td>Fri 17 Apr, 23:59</td><td>Fri 24 Apr, 23:59</td></tr>
-    <tr><td>Lab 2</td><td>Fri 1 May, 23:59</td><td>Fri 8 May, 23:59</td></tr>
-    <tr><td>Lab 3</td><td>Fri 8 May, 23:59</td><td>Fri 15 May, 23:59</td></tr>
-    <tr><td>Lab 4</td><td>Fri 15 May, 23:59</td><td>Fri 22 May, 23:59</td></tr>
-    <tr><td>Lab 5</td><td>Fri 29 May, 23:59</td><td>Fri 5 Jun, 23:59</td></tr>
+    <tr><td>Lab 1</td><td>Fri 17 Apr, 23:59</td></tr>
+    <tr><td>Lab 2</td><td>Fri 1 May, 23:59</td></tr>
+    <tr><td>Lab 3</td><td>Fri 8 May, 23:59</td></tr>
+    <tr><td>Lab 4</td><td>Fri 15 May, 23:59</td></tr>
+    <tr><td>Lab 5</td><td>Fri 29 May, 23:59</td></tr>
   </tbody>
 </table>
 <blockquote>
-  <p>Submissions more than one week late will <strong>not</strong> be accepted without prior approval from the course responsible.</p>
+  <p>Late submissions will <strong>not</strong> be accepted without prior approval from the course responsible.</p>
 </blockquote>
 
 <h3>Grading</h3>
-<p>Each lab is graded <strong>Pass / Fail</strong>. You must pass all 5 labs.</p>
-<p>A lab is <strong>passed</strong> when:</p>
-<ul>
-  <li>Part A is correctly implemented (verified by running the provided test cells)</li>
-  <li>Part B experiments are complete, reproducible, and correctly interpreted</li>
-  <li>The passing reward threshold (stated in each lab's notebook) is reached by at least one seed</li>
-</ul>
+<p>Each lab is graded individually on a scale of <strong>3 / 4 / 5</strong>. The final LAB grade is the <strong>mean</strong> of all 5 lab grades.</p>
+<table border="1" cellpadding="6" cellspacing="0">
+  <thead>
+    <tr><th>Grade</th><th>Criteria</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>3</td><td>Part A correctly implemented, Part B experiments complete and interpreted, reward threshold reached</td></tr>
+    <tr><td>4</td><td>Grade 3 criteria met + good experimental analysis and clear discussion of results</td></tr>
+    <tr><td>5</td><td>Grade 4 criteria met + thorough ablations, insightful analysis, and well-answered summary section</td></tr>
+  </tbody>
+</table>
 <hr />
 
 <h2>UPG — Individual Written Report</h2>
@@ -121,15 +135,15 @@
 <p><strong>Deadline:</strong> Fri 5 Jun, 23:59</p>
 
 <h3>Grading</h3>
-<p>The final course grade (3 / 4 / 5) is determined by the individual report:</p>
+<p>The report is graded on a scale of <strong>3 / 4 / 5</strong> and counts as one component in the final mean.</p>
 <table border="1" cellpadding="6" cellspacing="0">
   <thead>
-    <tr><th>Grade</th><th>Requirement</th></tr>
+    <tr><th>Grade</th><th>Criteria</th></tr>
   </thead>
   <tbody>
-    <tr><td>3</td><td>All labs passed + satisfactory report</td></tr>
-    <tr><td>4</td><td>All labs passed + good depth of analysis</td></tr>
-    <tr><td>5</td><td>All labs passed + thorough, insightful, and well-written report</td></tr>
+    <tr><td>3</td><td>Report submitted, options followed, findings clearly described</td></tr>
+    <tr><td>4</td><td>Grade 3 criteria met + good depth of analysis and well-structured writing</td></tr>
+    <tr><td>5</td><td>Grade 4 criteria met + critical insight, strong argumentation, and excellent writing</td></tr>
   </tbody>
 </table>
 <hr />

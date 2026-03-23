@@ -14,7 +14,12 @@ The examination consists of two components:
 | **LAB** | 4 hp | 5 lab assignments — group code submission |
 | **UPG** | 2 hp | Individual written report |
 
-Both components must be completed to pass the course.
+Both components are graded on a scale of **U / 3 / 4 / 5**. The final course grade is computed in two steps:
+
+1. **LAB grade** = mean of the 5 individual lab grades (rounded to nearest integer)
+2. **Final grade** = mean of LAB grade and UPG report grade (rounded to nearest integer)
+
+> **Important:** A grade of **U** in any single lab or the report results in a **U for the entire course**. All components must receive at least a 3 to pass.
 
 ---
 
@@ -29,7 +34,7 @@ Both components must be completed to pass the course.
   **[https://gitlab.liu.se/amaso88/tdde78lab](https://gitlab.liu.se/amaso88/tdde78lab)**
 - Each lab's `starter_code/` directory contains:
   - A Jupyter notebook with TODO placeholders for the algorithm(s)
-  - `networks.py` — fully implemented neural network architectures
+  - `networks.py` — neural network architectures with TODO placeholders to implement
   - `utils.py` — fully implemented helpers, replay buffers, and plotting functions
 
 ---
@@ -56,30 +61,33 @@ labX_[liu-ids]/
 └── networks.py            # Your implementation
 ```
 
+> **Important:** Before submitting, make sure the **Summary section** at the end of the notebook is fully filled in. All experiment questions from Part B must be answered there.
+
 Submit via email to [amath.sow@liu.se](mailto:amath.sow@liu.se).
 
 ### Deadlines
 
 All labs are available from the start of the course (Wed 1 Apr).
 
-| Lab | Submission Deadline | Late Deadline (−1 grade) |
-|-----|--------------------|-----------------------------|
-| Lab 1 | Fri 17 Apr, 23:59 | Fri 24 Apr, 23:59 |
-| Lab 2 | Fri 1 May, 23:59  | Fri 8 May, 23:59  |
-| Lab 3 | Fri 8 May, 23:59  | Fri 15 May, 23:59 |
-| Lab 4 | Fri 15 May, 23:59 | Fri 22 May, 23:59 |
-| Lab 5 | Fri 29 May, 23:59 | Fri 5 Jun, 23:59  |
+| Lab | Submission Deadline |
+|-----|---------------------|
+| Lab 1 | Fri 17 Apr, 23:59 |
+| Lab 2 | Fri 1 May, 23:59  |
+| Lab 3 | Fri 8 May, 23:59  |
+| Lab 4 | Fri 15 May, 23:59 |
+| Lab 5 | Fri 29 May, 23:59 |
 
-> Submissions more than one week late will **not** be accepted without prior approval from the course responsible.
+> Late submissions will **not** be accepted without prior approval from the course responsible.
 
 ### Grading
 
-Each lab is graded **Pass / Fail**. You must pass all 5 labs.
+Each lab is graded individually on a scale of **3 / 4 / 5**. The final LAB grade is the **mean** of all 5 lab grades.
 
-A lab is **passed** when:
-- Part A is correctly implemented (verified by running the provided test cells)
-- Part B experiments are complete, reproducible, and correctly interpreted
-- The passing reward threshold (stated in each lab's notebook) is reached by at least one seed
+| Grade | Criteria |
+|-------|----------|
+| 3 | Part A correctly implemented, Part B experiments complete and interpreted, reward threshold reached |
+| 4 | Grade 3 criteria met + good experimental analysis and clear discussion of results |
+| 5 | Grade 4 criteria met + thorough ablations, insightful analysis, and well-answered summary section |
 
 ---
 
@@ -121,13 +129,13 @@ Submit your individual `report.pdf` via email to [amath.sow@liu.se](mailto:amath
 
 ### Grading
 
-The final course grade (3 / 4 / 5) is determined by the individual report:
+The report is graded on a scale of **3 / 4 / 5** and counts as one component in the final mean.
 
-| Grade | Requirement |
-|-------|-------------|
-| 3 | All labs passed + satisfactory report |
-| 4 | All labs passed + good depth of analysis |
-| 5 | All labs passed + thorough, insightful, and well-written report |
+| Grade | Criteria |
+|-------|----------|
+| 3 | Report submitted, options followed, findings clearly described |
+| 4 | Grade 3 criteria met + good depth of analysis and well-structured writing |
+| 5 | Grade 4 criteria met + critical insight, strong argumentation, and excellent writing |
 
 ## Contact
 
